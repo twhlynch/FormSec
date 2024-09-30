@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormSec</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <p class="label">This is a demo of how browser autofill can be exploited to get far more personal data from someone than expected.</p>
+    <main>
+        <p>Enter your email.</p>
+        <form>
+            <input name="email" id="email" autocomplete="on" type="email" spellcheck="false" placeholder="example@mail.com">
+            <input name="username" id="username" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="name" id="name" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="full-name" id="full-name" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="first-name" id="first-name" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="last-name" id="last-name" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="surname" id="surname" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="family-name" id="family-name" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="birth-date" id="birth-date" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="date-of-birth" id="date-of-birth" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="phone" id="phone" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="phone-number" id="phone-number" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="number" id="number" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="address" id="address" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="postcode" id="postcode" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="street" id="street" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="state" id="state" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="city" id="city" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="town" id="town" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="province" id="province" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="country" id="country" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="initials" id="initials" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="address-line-2" id="address-line-2" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="card-number" id="card-number" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="cvv" id="cvv" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="expiry-date" id="expiry-date" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="one-time-code" id="one-time-code" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="company" id="company" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="organisation" id="organisation" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="organization" id="organization" autocomplete="on" type="text" spellcheck="false" class="hidden">
+            <input name="timezone" id="timezone" autocomplete="on" type="text" spellcheck="false" class="hidden">
+        </form>
+        <button id="submit">Submit</button>
+        <div id="popup"></div>
+    </main>
+    <script>
+        const inputs = document.querySelectorAll("input");
+        const submit = document.getElementById("submit");
+        const popup = document.getElementById("popup");
+
+        submit.addEventListener("click", (e) => {
+            e.preventDefault();
+            let data = "";
+
+            inputs.forEach((input) => {
+                if (input.value != "") {
+                    data += `<span>${input.name.replaceAll("-", " ").replace(input.name.charAt(0), input.name.charAt(0).toUpperCase())}:</span><span>${input.value}</span>`;
+                }
+            });
+
+            popup.innerHTML = data;
+            popup.style.display = "grid";
+        });
+    </script>
+</body>
+</html>

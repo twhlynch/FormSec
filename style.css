@@ -1,0 +1,102 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+body {
+    height: 100svh;
+    width: 100svw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100svh;
+    width: 100svw;
+    gap: 10px;
+}
+p {
+    width: min(80svw, 500px);
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, Tahoma, Geneva, Verdana, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.label {
+    padding: .75rem 1.25rem;
+    margin-block: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+input {
+    width: min(80svw, 500px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, Tahoma, Geneva, Verdana, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+button {
+    width: min(max(20svw, 100px), 150px);
+    padding: 10px;
+    border: 1px solid #4CAF50;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, Tahoma, Geneva, Verdana, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.hidden {
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+#popup {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2px;
+}
+#popup span {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, Tahoma, Geneva, Verdana, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#popup span:nth-child(2n) {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+#popup span:nth-child(2n - 1) {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+@media screen and (max-height: 630px) {
+    body {
+        font-size: 14px;
+    }
+    #popup span {
+        padding: 4px 8px;
+    }
+}
